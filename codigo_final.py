@@ -102,7 +102,7 @@ def main():
     for i in range(0, G):
         for j in range(0, G):
             objective.SetCoefficient(x[i][j], d[i][j])
-    objective.SetMinimization()
+    objective.SetMaximization()
 
     # [END objective]
 

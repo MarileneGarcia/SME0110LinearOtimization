@@ -102,7 +102,7 @@ def main():
     for i in range(0, G):
         for j in range(0, G):
             objective.SetCoefficient(x[i][j], d[i][j])
-    objective.SetMaximization()
+    objective.SetMinimization()
 
     # [END objective]
 
@@ -133,6 +133,7 @@ def main():
 
 def modelagem_visual(matriz, solucao):
     g = Graph().Weighted_Adjacency(matriz, mode=ADJ_DIRECTED, attr="label", loops=True)
+    g1 = Graph().Weighted_Adjacency(matriz, mode=ADJ_UPPER, attr="label", loops=True)
 
     g.vs()["galaxias"] = galaxias
     for vertice in g.vs():
@@ -160,9 +161,27 @@ def modelagem_visual(matriz, solucao):
     visual_style["vertex_label_dist"] = 2
     visual_style["edge_label_dist"] = -1
     visual_style["edge_curved"] = 0
-
     visual_style["margin"] = 40
-    plot(g, **visual_style)
+
+    layout1 = g1.layout("kk")
+    visual_style1 = {}
+    visual_style1["layout"] = layout1
+    visual_style1["vertex_color"] = (220,220,220)
+    visual_style1["edge_color"] = (220,220,220)
+    visual_style1["vertex_size"] = 30
+    visual_style1["edge_curved"] = 0
+    visual_style1["margin"] = 40
+    visual_style1["vertex_label"] = galaxias
+    visual_style["vertex_label_dist"] = 2
+    
+    
+    p = Plot(background="white", bbox=(1250, 600))
+    p.add(g, **visual_style, bbox=(650,1,1250, 600))
+    p.add(g1, **visual_style1, bbox=(1,1,600,600))
+    p.show()
+
+
+
 
 
 if __name__ == '__main__':

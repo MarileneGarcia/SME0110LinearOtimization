@@ -1,53 +1,63 @@
-# https://developers.google.com/optimization/lp/glop
-
-"""Minimal example to call the GLOP solver."""
 from __future__ import print_function
 from ortools.linear_solver import pywraplp
 import random
 from igraph import *
+import cairo
+import math
 
-galaxias = ['Andromeda', 'OlhoNegro', 'Girassol ', 'CataVento', 'Magalhaes']
-
+galaxias = ['Andromeda', 'OlhoNegro', 'Girassol ', 'CataVento', 'Magalhaes', 'Charuto', 'Redshift 7', 'Hoag', 'Sombreiro', 'Girino']
+d_maxima = 100
+d_infinita = 100000 * d_maxima
 
 def main():
-    # [START solver]
+    ########################### [START solver]
     # Create the linear solver with the GLOP backend.
     solver = pywraplp.Solver.CreateSolver('GLOP')
-    # [END solver]
+    ###########################  [END solver]
 
     print("ENIGMA DAS GALÁXIAS\n")
+    
+    begin = int(input("---> Digite 0 para o caso exemplo e 1 para personalizar: "))
 
-    G = int(input("---> Digite o número de galáxias: "))
+    infinity = solver.infinity()
+    while True: 
+        if begin == 0:
+            G = 5
+            d = [[d_infinita, 100, 1, 1, 1],[100, d_infinita, 1, 100, 1],[1, 1, d_infinita, 1, 100],[1, 100, 1, d_infinita, 1],[1, 1, 100, 1, d_infinita]]
+            break
+
+        elif begin == 1:
+            G = int(input("---> Digite o número de galáxias: "))
+            d = gerar_aleatorio(G)
+            break
+
+        else:
+            begin = int(input("---> Entrada inválida, digite o ou 1! "))
+
+    print("\n")
 
     for i in range(0, G):
         print(i, galaxias[i], sep=": ")
 
     print("\n")
 
+    '''for i in range(0, G):
+        for j in range(0, G):
+            print(int(d[i][j]), end='   ')
+        print("\n")
+
+    print("\n")'''
+
     inicio = int(
         input("---> De que galáxia você quer partir, senhor astrônomo? "))
+    
+    print("\n")
+
     print("Saindo de: ", galaxias[inicio])
 
     print("\n")
 
-    d = [[0 for i in range(G)] for j in range(G)]
-    for i in range(0, G):
-        for j in range(i, G):
-            if i == j:
-                d[i][j] = 0
-            else:
-                d[i][j] = random.randint(0, 100)
-
-    for i in range(1, G):
-        for j in range(0, i):
-            d[i][j] = d[j][i]
-
-    print(d)
-
-    print("\n")
-
-    # [START variables]
-
+    ###########################  [START variables]
     x = [[0 for i in range(G)] for j in range(G)]
     for i in range(0, G):
         for j in range(0, G):
@@ -55,14 +65,12 @@ def main():
             #print (name_x)
             x[i][j] = solver.BoolVar(name_x)
 
-    print('Number of variables =', solver.NumVariables())
-
-    # [END variables]
+    print('Número de variáveis =', solver.NumVariables())
+    ###########################  [END variables]
 
     print("\n")
 
-    # [START constraints]
-
+    ###########################  [START constraints]
     for g in range(0, G):
         name_ct = 'ct' + str(g) + 'k'
         name_ct = solver.Constraint(1, 1)
@@ -73,15 +81,8 @@ def main():
                 else:
                     name_ct.SetCoefficient(x[i][j], 0)
 
-    # for j in range(0,G):
-    #    name_ct = 'ct' +  'k' + str(j)
-    #    name_ct = solver.Constraint(1,1)
-    #    for i in range(0,G):
-    #        name_x = 'x' + str(i) + str(j)
-    #        name_ct.SetCoefficient(name_x, 1)
-
     for g in range(0, G):
-        name_ct = 'ct' + str(g) + 'k'
+        name_ct = 'ct' + 'k' + str(g)
         name_ct = solver.Constraint(1, 1)
         for j in range(0, G):
             for i in range(0, G):
@@ -90,31 +91,42 @@ def main():
                 else:
                     name_ct.SetCoefficient(x[i][j], 0)
 
-    print('Number of constraints =', solver.NumConstraints())
-    # [END constraints]
+    for m in range(0, G):
+        for n in range(m+1, G):
+            # (m,n) é cada subciclo
+            name_ct = 'ct' + str(m) + str(n)
+            name_ct = solver.Constraint(1, solver.infinity())
+            for i in range(0, G):
+                for j in range(0, G):
+                    if i==m and j!=m and j!=n:
+                        name_ct.SetCoefficient(x[i][j], 1)
+                    elif i==n and j!=m and j!=m:
+                        name_ct.SetCoefficient(x[i][j], 1)
+                    else:
+                        name_ct.SetCoefficient(x[i][j], 0)
 
-    print("\n")
+    print('Número de restrições =', solver.NumConstraints())
+    ###########################  [END constraints]
 
-    # [START objective]
 
+    ###########################  [START objective]
     objective = solver.Objective()
 
     for i in range(0, G):
         for j in range(0, G):
             objective.SetCoefficient(x[i][j], d[i][j])
-    objective.SetMaximization()
-
-    # [END objective]
+    objective.SetMinimization()
+    ###########################  [END objective]
 
     print("\n")
 
-    # [START solve]
+    ###########################  [START solve]
     solver.Solve()
-    # [END solve]
+    ###########################  [END solve]
 
-    # [START print_solution]
-    print('Solution:')
-    print('Objective value =', objective.Value())
+
+    ###########################  [START print_solution]
+    print('Solução - Valor objetivo =', objective.Value())
 
     # print(x)
 
@@ -122,18 +134,34 @@ def main():
     for i in range(0, G):
         lista = []
         for j in range(0, G):
-            print(int(x[i][j].solution_value()), end='   ')
+            #print(int(x[i][j].solution_value()), end='   ')
             lista.append(int(x[i][j].solution_value()))
         solucao.append(lista)
-        print("\n")
+        #print("\n")
 
     modelagem_visual(d, solucao)
-    # [END print_solution]
 
+    print("\n")
+    ###########################  [END print_solution]
+
+def gerar_aleatorio(G):
+    d = [[0 for i in range(G)] for j in range(G)]
+    for i in range(0, G):
+        for j in range(i, G):
+            if i == j:
+                d[i][j] = d_infinita
+            else:
+                d[i][j] = random.randint(0, d_maxima)
+
+    for i in range(1, G):
+        for j in range(0, i):
+            d[i][j] = d[j][i]
+
+    return d
 
 def modelagem_visual(matriz, solucao):
-    g = Graph().Weighted_Adjacency(matriz, mode=ADJ_DIRECTED, attr="label", loops=True)
-    g1 = Graph().Weighted_Adjacency(matriz, mode=ADJ_UPPER, attr="label", loops=True)
+    g = Graph().Weighted_Adjacency(matriz, mode=ADJ_DIRECTED, attr="label", loops=False)
+    g1 = Graph().Weighted_Adjacency(matriz, mode=ADJ_UPPER, attr="label", loops=False)
 
     g.vs()["galaxias"] = galaxias
     for vertice in g.vs():
@@ -142,7 +170,7 @@ def modelagem_visual(matriz, solucao):
     for col in range(len(solucao)):
         for lin in range(len(solucao[col])):
             if(col != lin and solucao[col][lin] == 1):
-                g.es[g.get_eid(col,lin)]["color"] = "darkred"
+                g.es[g.get_eid(col,lin)]["color"] = (139,0,0)
                 g.es[g.get_eid(col,lin)]["label"] = g.es[g.get_eid(col,lin)]["label"]
             elif(col != lin and solucao[col][lin] == 0):
                 g.es[g.get_eid(col,lin)]["color"] = (255, 255, 255, 0)
@@ -157,7 +185,7 @@ def modelagem_visual(matriz, solucao):
     visual_style["vertex_label"] = g.vs()["galaxias"]
     visual_style["vertex_color"] = g.vs["color"]
     visual_style["vertex_size"] = 30
-    visual_style["vertex_label_color"] = "darkblue"
+    visual_style["vertex_label_color"] = "blue"
     visual_style["vertex_label_dist"] = 2
     visual_style["edge_label_dist"] = -1
     visual_style["edge_curved"] = 0
@@ -169,19 +197,16 @@ def modelagem_visual(matriz, solucao):
     visual_style1["vertex_color"] = (220,220,220)
     visual_style1["edge_color"] = (220,220,220)
     visual_style1["vertex_size"] = 30
-    visual_style1["edge_curved"] = 0
+    #visual_style1["edge_curved"] = 0
     visual_style1["margin"] = 40
     visual_style1["vertex_label"] = galaxias
     visual_style["vertex_label_dist"] = 2
     
     
-    p = Plot(background="white", bbox=(1250, 600))
-    p.add(g, **visual_style, bbox=(650,1,1250, 600))
-    p.add(g1, **visual_style1, bbox=(1,1,600,600))
+    p = Plot(background=(255,255,255), bbox=(1250, 600), target=None)
+    p.add(g, **visual_style, bbox=(650,1,1250, 600), target=None)
+    p.add(g1, **visual_style1, bbox=(1,1,600,600), target=None)
     p.show()
-
-
-
 
 
 if __name__ == '__main__':

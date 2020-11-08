@@ -41,8 +41,9 @@ Pacote [igraph](https://igraph.org/python/)<br>
 * Abra um terminal e digite o comando:<br>
   `python codigo.py`
   
-  ## Visualização da resposta
-  Será aberta uma janela com a imagem e seram impressos no terminal os dados da resposta.<br><br>
+ ## Visualização da resposta
+ Será aberta uma janela com a imagem e seram impressos no terminal os dados da resposta.<br><br>
   
-  Obs. Foi usado o linear optimization solve da OR-Tools, o [Glop](https://developers.google.com/optimization/lp/glop) (Google's linear programming system). Sendo ele eficiente em questão de velocidade para resolver o problema e alocação de memória, além de ser numericamente estável. 
+ ### Obs. 
+ Foi usado o linear optimization solve da OR-Tools, o [Glop](https://developers.google.com/optimization/lp/glop) (Google's linear programming system). Sendo ele eficiente em questão de velocidade para resolver o problema e alocação de memória, além de ser numericamente estável. 
 

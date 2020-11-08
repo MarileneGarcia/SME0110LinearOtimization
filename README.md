@@ -39,7 +39,7 @@ Pacote [igraph](https://igraph.org/python/)<br>
 * De preferência esteja usando sistema operacional Ubuntu 18.04, ou Windows 10
 * Entre no diretório que esta o código
 * Abra um terminal e digite o comando:<br>
- `python codigo.py`
+`python codigo.py`
   
  ## Visualização da resposta
  Será aberta uma janela com a imagem e seram impressos no terminal os dados da resposta.<br><br>

@@ -24,14 +24,14 @@ Alunos: <br>
 <!-- ABOUT THE PROJECT -->
 ## Instação das bibliotecas
 
-Biblioteca [OR-Tools](https://developers.google.com/optimization/install)
+Biblioteca [OR-Tools](https://developers.google.com/optimization/install)<br>
 `python -m pip install --upgrade --user ortools`
 
-Pacote [igraph](https://igraph.org/python/)
+Pacote [igraph](https://igraph.org/python/)<br>
 `pip install python-igraph`
 
 
-# Pode ser necesário a instalção do módulo [Pycairo](https://pypi.org/project/pycairo/)
+### Pode ser necesário a instalção do módulo [Pycairo](https://pypi.org/project/pycairo/)
 `pip install pycairo`
 
 ## Execução do Código
@@ -42,7 +42,7 @@ Pacote [igraph](https://igraph.org/python/)
   ``python codigo.py`
   
   ## Visualização da resposta
-  Será aberta uma janela com a imagem e seram impressos no terminal os dados da resposta.
+  Será aberta uma janela com a imagem e seram impressos no terminal os dados da resposta.<br><br>
   
   Obs. Foi usado o linear optimization solve da OR-Tools, o [Glop](https://developers.google.com/optimization/lp/glop) (Google's linear programming system). Sendo ele eficiente em questão de velocidade para resolver o problema e alocação de memória, além de ser numericamente estável. 
 

@@ -151,7 +151,7 @@ def gerar_aleatorio(G):
             if i == j:
                 d[i][j] = d_infinita
             else:
-                d[i][j] = random.randint(0, d_maxima)
+                d[i][j] = random.randint(1, d_maxima)
 
     for i in range(1, G):
         for j in range(0, i):

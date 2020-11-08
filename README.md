@@ -1,1 +1,1 @@
-# SME0110_linearOtimization
+# SME0110LinearOtimization

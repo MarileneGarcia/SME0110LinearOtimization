@@ -4,12 +4,15 @@ import random
 from igraph import *
 import cairo
 import math
+import generate_matrix
 
 galaxias = ['Andromeda', 'OlhoNegro', 'Girassol ', 'CataVento', 'Magalhaes', 'Charuto', 'Redshift 7', 'Hoag', 'Sombreiro', 'Girino']
 d_maxima = 100
 d_infinita = 100000 * d_maxima
 
 def main():
+    matriz_distancias = generate_matrix.generate_matrix('dj38.tsp')
+
     ########################### [START solver]
     # Create the linear solver with the GLOP backend.
     solver = pywraplp.Solver.CreateSolver('GLOP')

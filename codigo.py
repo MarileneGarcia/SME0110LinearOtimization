@@ -2,17 +2,16 @@ from __future__ import print_function
 from ortools.linear_solver import pywraplp
 import random
 from igraph import *
-import cairo
+from itertools import combinations 
 import math
 import generate_matrix
 
-galaxias = ['Andromeda', 'OlhoNegro', 'Girassol ', 'CataVento', 'Magalhaes', 'Charuto', 'Redshift 7', 'Hoag', 'Sombreiro', 'Girino']
+galaxias = []
 d_maxima = 100
 d_infinita = 100000 * d_maxima
 
 def main():
-    matriz_distancias = generate_matrix.generate_matrix('dj38.tsp')
-
+    global galaxias
     ########################### [START solver]
     # Create the linear solver with the GLOP backend.
     solver = pywraplp.Solver.CreateSolver('GLOP')
@@ -31,7 +30,12 @@ def main():
 
         elif begin == 1:
             G = int(input("---> Digite o número de galáxias: "))
-            d = gerar_aleatorio(G)
+            d = gerar_aleatorio(G, galaxias)
+            break
+
+        elif begin == 2:
+            d, galaxias = generate_matrix.generate_matrix('dj38.tsp')
+            G = len(galaxias)
             break
 
         else:
@@ -48,7 +52,6 @@ def main():
         for j in range(0, G):
             print(int(d[i][j]), end='   ')
         print("\n")
-
     print("\n")'''
 
     inicio = int(
@@ -94,19 +97,35 @@ def main():
                 else:
                     name_ct.SetCoefficient(x[i][j], 0)
 
-    for m in range(0, G):
-        for n in range(m+1, G):
-            # (m,n) é cada subciclo
-            name_ct = 'ct' + str(m) + str(n)
+    c_max = G - 1
+    for c in range(2, c_max):
+        S = combinations(galaxias,c)
+        g_in = []
+        g_out = []
+
+        i_tpl = 0
+        for tpl in S:
+            name_ct = 'ct_tpl' + str(i_tpl)
             name_ct = solver.Constraint(1, solver.infinity())
+            #print(name_ct)
+            #print(tpl)
+
+            for i in range(0,c):
+                g_in.append(int(tpl[i]))
+            
+            #print(g_in)
+
             for i in range(0, G):
                 for j in range(0, G):
-                    if i==m and j!=m and j!=n:
-                        name_ct.SetCoefficient(x[i][j], 1)
-                    elif i==n and j!=m and j!=m:
+                    if (i in g_in) and (j not in g_in):
+                        #print('Dentro: ' + str(i) + ' ' + str(j))
                         name_ct.SetCoefficient(x[i][j], 1)
                     else:
                         name_ct.SetCoefficient(x[i][j], 0)
+
+            g_in.clear()
+            i_tpl +=1
+
 
     print('Número de restrições =', solver.NumConstraints())
     ###########################  [END constraints]
@@ -147,7 +166,12 @@ def main():
     print("\n")
     ###########################  [END print_solution]
 
-def gerar_aleatorio(G):
+def gerar_aleatorio(G, galaxias):
+    for i in range(0, G):
+        nome = f"{i}"
+        #print (nome)
+        galaxias.append(nome)
+
     d = [[0 for i in range(G)] for j in range(G)]
     for i in range(0, G):
         for j in range(i, G):

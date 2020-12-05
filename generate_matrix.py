@@ -44,7 +44,7 @@ def generate_matrix(file_name):
 
         matriz_distancias.append(lista)
 
-    return matriz_distancias, nomes
+    return matriz_distancias, nomes, coordenadas
 
 
 

@@ -4,14 +4,12 @@ import random
 from igraph import *
 from itertools import combinations 
 import math
-import generate_matrix
 
 galaxias = []
 d_maxima = 100
 d_infinita = 100000 * d_maxima
 
 def main():
-    global galaxias
     ########################### [START solver]
     # Create the linear solver with the GLOP backend.
     solver = pywraplp.Solver.CreateSolver('GLOP')
@@ -31,11 +29,6 @@ def main():
         elif begin == 1:
             G = int(input("---> Digite o número de galáxias: "))
             d = gerar_aleatorio(G, galaxias)
-            break
-
-        elif begin == 2:
-            d, galaxias = generate_matrix.generate_matrix('dj38.tsp')
-            G = len(galaxias)
             break
 
         else:
@@ -107,13 +100,13 @@ def main():
         for tpl in S:
             name_ct = 'ct_tpl' + str(i_tpl)
             name_ct = solver.Constraint(1, solver.infinity())
-            #print(name_ct)
+            print(name_ct)
             #print(tpl)
 
             for i in range(0,c):
                 g_in.append(int(tpl[i]))
             
-            #print(g_in)
+            print(g_in)
 
             for i in range(0, G):
                 for j in range(0, G):

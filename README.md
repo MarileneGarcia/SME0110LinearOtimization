@@ -64,6 +64,16 @@ Serão listadas as instâncias possíveis, basta selecionar a desejada:
 
 `---> Digite 0 para Djibouti, 1 para Qatar, 2 para Uruguay e 3 para Western Sahara:`
 
+Para a heurística 2-opt:
+
+* Abra um terminal e digite o comando:<br>
+`python 2-opt.py`
+
+Serão listadas as instâncias possíveis, basta selecionar a desejada:
+
+`---> Digite 0 para Djibouti, 1 para Qatar, 2 para Uruguay e 3 para Western Sahara:`
+
+
 
  ## Visualização da resposta
  Será aberta uma janela com a imagem e seram impressos no terminal os dados da resposta.<br><br>

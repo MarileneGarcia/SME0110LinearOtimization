@@ -17,28 +17,27 @@ def main():
     global galaxias
     global coordenadas
 
-    ########################### [START solver]
-    # Create the linear solver with the GLOP backend.
-    solver = pywraplp.Solver.CreateSolver('GLOP')
-    ###########################  [END solver]
-
     print("ENIGMA DAS GALÁXIAS\n")
     
-    begin = int(input("---> Digite 0 para o caso exemplo e 1 para personalizar: "))
+    begin = int(input("---> Digite 0 para Djibouti, 1 para Qatar, 2 para Uruguay e 3 para Western Sahara: "))
 
-    infinity = solver.infinity()
     while True: 
         if begin == 0:
-            G = 5
-            d = [[d_infinita, 100, 1, 1, 1],[100, d_infinita, 1, 100, 1],[1, 1, d_infinita, 1, 100],[1, 100, 1, d_infinita, 1],[1, 1, 100, 1, d_infinita]]
+            d, galaxias, coordenadas = generate_matrix.generate_matrix('dj38.tsp')
+            G = len(galaxias)
             break
 
         elif begin == 1:
-            G = int(input("---> Digite o número de galáxias: "))
-            d = gerar_aleatorio(G, galaxias)
+            d, galaxias, coordenadas = generate_matrix.generate_matrix('qa194.tsp')
+            G = len(galaxias)
             break
 
         elif begin == 2:
+            d, galaxias, coordenadas = generate_matrix.generate_matrix('uy734.tsp')
+            G = len(galaxias)
+            break
+
+        elif begin == 3:
             d, galaxias, coordenadas = generate_matrix.generate_matrix('wi29.tsp')
             G = len(galaxias)
             break
@@ -59,39 +58,34 @@ def main():
         print("\n")
     print("\n")'''
 
-    inicio = int(
-        input("---> De que galáxia você quer partir, senhor astrônomo? "))
-    
-    print("\n")
+    dist_total = d_infinita
+    for inicio in range(G):
+        dist = []
+        visitados = []
+        visitados.append(inicio)
 
-    print("Saindo de: ", galaxias[inicio])
+        for j in range(len(galaxias)-1) :
+            min_dist = d_infinita
+            prox_viz = inicio
 
-    print("\n")
+            for i in range(len(d[inicio])):
+                dist_atual = d[inicio][i]
 
-    dist = []
-    visitados = []
-    visitados.append(inicio)
+                if (dist_atual < min_dist and i not in visitados) :
+                    min_dist = dist_atual
+                    prox_viz = i
+            
+            inicio = prox_viz
+            dist.append(min_dist)
+            visitados.append(prox_viz)
 
-    for j in range(len(galaxias)-1) :
-        min_dist = d_infinita
-        prox_viz = inicio
-        no_ini = inicio
-
-        for i in range(len(d[inicio])):
-            dist_atual = d[inicio][i]
-
-            if (dist_atual < min_dist and i not in visitados) :
-                min_dist = dist_atual
-                prox_viz = i
-        
-        inicio = prox_viz
-        dist.append(min_dist)
-        visitados.append(prox_viz)
-
-    comeco = int(visitados[0])
-    final = int(visitados[len(visitados)-1])
-    visitados.append(comeco)
-    dist.append(d[inicio][comeco])
+        comeco = int(visitados[0])
+        visitados.append(comeco)
+        dist.append(d[inicio][comeco])
+        if sum(dist) < dist_total:
+            dist_total = sum(dist)
+            pos_inicial = comeco
+            caminho_final = visitados
     
     #modelagem_visual(d, solucao)
 
@@ -99,7 +93,7 @@ def main():
 
 
     # Reorder the cities matrix by route order in a new matrix for plotting.
-    route = np.array(visitados)
+    route = np.array(caminho_final)
     cities = np.array(coordenadas)
 
     new_cities_order = np.concatenate((np.array([coordenadas[route[i]] for i in range(len(route))]),np.array([coordenadas[route[0]]])))
@@ -107,9 +101,7 @@ def main():
     # Plot the cities.
     
     plt.scatter(cities[:,0],cities[:,1])
-    plt.scatter(coordenadas[comeco][0],coordenadas[comeco][1], color='red')
-    plt.scatter(coordenadas[final][0],coordenadas[final][1], color='green')
-
+    plt.scatter(cities[pos_inicial][0], cities[pos_inicial][1], color='red')
     for i in range(len(coordenadas)):
         plt.text(coordenadas[i][0],coordenadas[i][1], str(i), fontsize=9)
 
@@ -117,8 +109,7 @@ def main():
     plt.plot(new_cities_order[:,0],new_cities_order[:,1])
     plt.show()
     # Print the route as row numbers and the total distance travelled by the path.
-    print("Galáxias Visitadas: " + str(route) + "\n\nDistancias: " + str(np.array(dist)) + "\n\nDistancias Total: " + str(sum(dist)))
-
+    print("Galáxias Visitadas: " + str(route) + "\n\nDistancias Total: " + str(dist_total))
 
 def gerar_aleatorio(G, galaxias):
     for i in range(0, G):
@@ -157,7 +148,6 @@ def modelagem_visual(matriz, solucao):
                 g.es[g.get_eid(col,lin)]["color"] = (255, 255, 255, 0)
                 g.es[g.get_eid(col,lin)]["label"] = ' '
 
-
     layout = g.layout("kk")
     visual_style = {}
     visual_style["layout"] = layout
@@ -183,12 +173,10 @@ def modelagem_visual(matriz, solucao):
     visual_style1["vertex_label"] = galaxias
     visual_style["vertex_label_dist"] = 2
     
-    
     p = Plot(background=(255,255,255), bbox=(1250, 600), target=None)
     p.add(g, **visual_style, bbox=(650,1,1250, 600), target=None)
     p.add(g1, **visual_style1, bbox=(1,1,600,600), target=None)
     p.show()
-
 
 if __name__ == '__main__':
     main()

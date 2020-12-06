@@ -47,7 +47,7 @@ if __name__ == '__main__':
 
     print("\nENIGMA DAS GALÁXIAS")
 
-    d, galaxias, coordenadas = generate_matrix.generate_matrix('dj38.tsp')
+    d, galaxias, coordenadas = generate_matrix.generate_matrix('uy734.tsp')
     G = len(d)
     d = np.array(d)
     #np.fill_diagonal(d, 0)

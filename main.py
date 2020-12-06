@@ -34,11 +34,6 @@ def main():
             d = gerar_aleatorio(G, galaxias)
             break
 
-        elif begin == 2:
-            d, galaxias, coordenadas = generate_matrix.generate_matrix('wi29.tsp')
-            G = len(galaxias)
-            break
-
         else:
             begin = int(input("---> Entrada inválida, digite o ou 1! "))
 

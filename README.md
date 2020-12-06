@@ -22,7 +22,7 @@ Alunos: <br>
 
 
 <!-- ABOUT THE PROJECT -->
-## Instação das bibliotecas
+## Instalação das bibliotecas
 
 Biblioteca [OR-Tools](https://developers.google.com/optimization/install)<br>
 `python -m pip install --upgrade --user ortools`
@@ -30,8 +30,19 @@ Biblioteca [OR-Tools](https://developers.google.com/optimization/install)<br>
 Pacote [igraph](https://igraph.org/python/)<br>
 `pip install python-igraph`
 
+Biblioteca [numpy](https://numpy.org/doc/stable/)<br>
+`pip install numpy`
 
-##### Pode ser necesário a instalção do módulo [Pycairo](https://pypi.org/project/pycairo/)
+Biblioteca [matplotlib](https://matplotlib.org/contents.html)<br>
+`pip install matplotlib`
+
+Biblioteca [itertools](https://docs.python.org/3/library/itertools.html)<br>
+`pip install itertools`
+
+
+
+
+##### Pode ser necesário a instalação do módulo [Pycairo](https://pypi.org/project/pycairo/)
 `pip install pycairo`
 
 ## Execução do Código

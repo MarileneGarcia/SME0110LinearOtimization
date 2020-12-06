@@ -49,9 +49,22 @@ Biblioteca [itertools](https://docs.python.org/3/library/itertools.html)<br>
 
 * De preferência esteja usando sistema operacional Ubuntu 18.04, ou Windows 10
 * Entre no diretório que esta o código
+
+Para a primeira parte do trabalho, com 5 galáxias pré-definidas ou com número personalizado de galáxias geradas aleatoriamente:
+
 * Abra um terminal e digite o comando:<br>
-`python codigo.py`
-  
+`python main.py`
+
+Para a heurística de Vizinhos Próximos:
+
+* Abra um terminal e digite o comando:<br>
+`python vizinhos_proximos.py`
+
+Serão listadas as instâncias possíveis, basta selecionar a desejada:
+
+`---> Digite 0 para Djibouti, 1 para Qatar, 2 para Uruguay e 3 para Western Sahara:`
+
+
  ## Visualização da resposta
  Será aberta uma janela com a imagem e seram impressos no terminal os dados da resposta.<br><br>
   

@@ -55,6 +55,10 @@ Para a primeira parte do trabalho, com 5 galáxias pré-definidas ou com número
 * Abra um terminal e digite o comando:<br>
 `python main.py`
 
+É possível escolher a opção do caso exemplo (0) ou personalizar um número de galáxias (1):
+
+`---> Digite 0 para o caso exemplo e 1 para personalizar: `
+
 Para a heurística de Vizinhos Próximos:
 
 * Abra um terminal e digite o comando:<br>
@@ -73,10 +77,19 @@ Serão listadas as instâncias possíveis, basta selecionar a desejada:
 
 `---> Digite 0 para Djibouti, 1 para Qatar, 2 para Uruguay e 3 para Western Sahara:`
 
+Para as ferramentas prontas do OR-Tools:
+
+* Abra um terminal e digite o comando:<br>
+`python or-tools.py`
+
+Serão listadas as instâncias possíveis, basta selecionar a desejada:
+
+`---> Digite 0 para Djibouti, 1 para Qatar, 2 para Uruguay e 3 para Western Sahara:`
+
 
 
  ## Visualização da resposta
- Será aberta uma janela com a imagem e seram impressos no terminal os dados da resposta.<br><br>
+ Será aberta uma janela com a representação gráfica e serão impressos no terminal os dados da resposta.<br><br>
   
  ### Obs. 
  Foi usado o linear optimization solve da OR-Tools, o [Glop](https://developers.google.com/optimization/lp/glop) (Google's linear programming system). Sendo ele eficiente em questão de velocidade para resolver o problema e alocação de memória, além de ser numericamente estável. 

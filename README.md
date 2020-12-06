@@ -50,7 +50,7 @@ Biblioteca [itertools](https://docs.python.org/3/library/itertools.html)<br>
 * De preferência esteja usando sistema operacional Ubuntu 18.04, ou Windows 10
 * Entre no diretório que esta o código
 
-Para a primeira parte do trabalho, com 5 galáxias pré-definidas ou com número personalizado de galáxias geradas aleatoriamente:
+**Para a primeira parte do trabalho, com 5 galáxias pré-definidas ou com número personalizado de galáxias geradas aleatoriamente:**
 
 * Abra um terminal e digite o comando:<br>
 `python main.py`
@@ -59,7 +59,7 @@ Para a primeira parte do trabalho, com 5 galáxias pré-definidas ou com número
 
 `---> Digite 0 para o caso exemplo e 1 para personalizar: `
 
-Para a heurística de Vizinhos Próximos:
+**Para a heurística de Vizinhos Próximos:**
 
 * Abra um terminal e digite o comando:<br>
 `python vizinhos_proximos.py`
@@ -68,7 +68,7 @@ Serão listadas as instâncias possíveis, basta selecionar a desejada:
 
 `---> Digite 0 para Djibouti, 1 para Qatar, 2 para Uruguay e 3 para Western Sahara:`
 
-Para a heurística 2-opt:
+**Para a heurística 2-opt:**
 
 * Abra um terminal e digite o comando:<br>
 `python 2-opt.py`
@@ -77,7 +77,7 @@ Serão listadas as instâncias possíveis, basta selecionar a desejada:
 
 `---> Digite 0 para Djibouti, 1 para Qatar, 2 para Uruguay e 3 para Western Sahara:`
 
-Para as ferramentas prontas do OR-Tools:
+**Para as ferramentas prontas do OR-Tools:**
 
 * Abra um terminal e digite o comando:<br>
 `python or-tools.py`

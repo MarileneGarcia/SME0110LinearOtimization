@@ -44,12 +44,13 @@ def calcula_custo(d, rota):
 
 if __name__ == '__main__':
     start_time = time.time()
+
     print("\nENIGMA DAS GALÁXIAS")
 
-    d, galaxias, coordenadas = generate_matrix.generate_matrix('wi29.tsp')
+    d, galaxias, coordenadas = generate_matrix.generate_matrix('dj38.tsp')
     G = len(d)
     d = np.array(d)
-    np.fill_diagonal(d, 0)
+    #np.fill_diagonal(d, 0)
     coordenadas = np.array(coordenadas)
     #print(d)
     #print(G)
@@ -57,7 +58,7 @@ if __name__ == '__main__':
     rota_inicial = list(range(G))
     #random.shuffle(rota_inicial)
 
-    rota_top = h_2opt(rota_inicial, d)
+    rota_top = h_2opt(rota_inicial.copy(), d)
 
     final_time = time.time() - start_time
     

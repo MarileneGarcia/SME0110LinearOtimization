@@ -45,7 +45,34 @@ def plot_resultado(manager, routing, solution, coordenadas, galaxias, tempo):
 def main():
     start_time = time.time()
 
-    d, galaxias, coordenadas = generate_matrix.generate_matrix('qa194.tsp')
+    print("ENIGMA DAS GALÁXIAS - OR-TOOLS PARAMS SOLVERS\n")
+    
+    begin = int(input("---> Digite 0 para Western Sahara, 1 para Djibouti, 2 para Qatar e 3 para Uruguay: "))
+
+    while True: 
+        if begin == 0:
+            d, galaxias, coordenadas = generate_matrix.generate_matrix('wi29.tsp')
+            G = len(galaxias)
+            break
+
+        elif begin == 1:
+            d, galaxias, coordenadas = generate_matrix.generate_matrix('dj38.tsp')
+            G = len(galaxias)
+            break
+
+        elif begin == 2:
+            d, galaxias, coordenadas = generate_matrix.generate_matrix('qa194.tsp')
+            G = len(galaxias)
+            break
+
+        elif begin == 3:
+            d, galaxias, coordenadas = generate_matrix.generate_matrix('uy734.tsp')
+            G = len(galaxias)
+            break
+
+        else:
+            begin = int(input("---> Entrada inválida, digite o ou 1! "))
+
     coordenadas = np.array(coordenadas)
 
     """Entry point of the program."""
@@ -73,8 +100,27 @@ def main():
 
     # Setting first solution heuristic.
     search_parameters = pywrapcp.DefaultRoutingSearchParameters()
-    search_parameters.first_solution_strategy = (
-        routing_enums_pb2.FirstSolutionStrategy.PATH_CHEAPEST_ARC)
+
+    param = int(input("---> Escolha a estratégia\nDigite 0 para PATH_CHEAPEST_ARC, 1 para SAVINGS, 2 para CHRISTOFIDES: "))
+
+    while True: 
+        if param == 0:
+            search_parameters.first_solution_strategy = (
+                routing_enums_pb2.FirstSolutionStrategy.PATH_CHEAPEST_ARC)
+            break
+
+        elif param == 1:
+            search_parameters.first_solution_strategy = (
+                routing_enums_pb2.FirstSolutionStrategy.SAVINGS)
+            break
+
+        elif param == 2:
+            search_parameters.first_solution_strategy = (
+                routing_enums_pb2.FirstSolutionStrategy.CHRISTOFIDES)
+            break
+
+        else:
+            param = int(input("---> Entrada inválida, digite o ou 1! "))
 
     # Solve the problem.
     solution = routing.SolveWithParameters(search_parameters)

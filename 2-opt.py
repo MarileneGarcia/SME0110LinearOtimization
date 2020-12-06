@@ -45,9 +45,35 @@ def calcula_custo(d, rota):
 if __name__ == '__main__':
     start_time = time.time()
 
-    print("\nENIGMA DAS GALÁXIAS")
+    print("ENIGMA DAS GALÁXIAS - 2-OPT\n")
+    
+    begin = int(input("---> Digite 0 para Western Sahara, 1 para Djibouti, 2 para Qatar e 3 para Uruguay: "))
 
-    d, galaxias, coordenadas = generate_matrix.generate_matrix('uy734.tsp')
+    while True: 
+        if begin == 0:
+            d, galaxias, coordenadas = generate_matrix.generate_matrix('wi29.tsp')
+            G = len(galaxias)
+            break
+
+        elif begin == 1:
+            d, galaxias, coordenadas = generate_matrix.generate_matrix('dj38.tsp')
+            G = len(galaxias)
+            break
+
+        elif begin == 2:
+            d, galaxias, coordenadas = generate_matrix.generate_matrix('qa194.tsp')
+            G = len(galaxias)
+            break
+
+        elif begin == 3:
+            d, galaxias, coordenadas = generate_matrix.generate_matrix('uy734.tsp')
+            G = len(galaxias)
+            break
+
+        else:
+            begin = int(input("---> Entrada inválida! Digite 0 para Western Sahara, 1 para Djibouti, 2 para Qatar e 3 para Uruguay: "))
+
+    print("\n")
     G = len(d)
     d = np.array(d)
     #np.fill_diagonal(d, 0)

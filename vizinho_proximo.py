@@ -12,33 +12,33 @@ def main():
     global galaxias
     global coordenadas
 
-    print("ENIGMA DAS GALÁXIAS\n")
+    print("ENIGMA DAS GALÁXIAS - Vizinhos Próximos\n")
     
-    begin = int(input("---> Digite 0 para Djibouti, 1 para Qatar, 2 para Uruguay e 3 para Western Sahara: "))
+    begin = int(input("---> Digite 0 para Western Sahara, 1 para Djibouti, 2 para Qatar e 3 para Uruguay: "))
 
     while True: 
         if begin == 0:
-            d, galaxias, coordenadas = generate_matrix.generate_matrix('dj38.tsp')
-            G = len(galaxias)
-            break
-
-        elif begin == 1:
-            d, galaxias, coordenadas = generate_matrix.generate_matrix('qa194.tsp')
-            G = len(galaxias)
-            break
-
-        elif begin == 2:
-            d, galaxias, coordenadas = generate_matrix.generate_matrix('uy734.tsp')
-            G = len(galaxias)
-            break
-
-        elif begin == 3:
             d, galaxias, coordenadas = generate_matrix.generate_matrix('wi29.tsp')
             G = len(galaxias)
             break
 
+        elif begin == 1:
+            d, galaxias, coordenadas = generate_matrix.generate_matrix('dj38.tsp')
+            G = len(galaxias)
+            break
+
+        elif begin == 2:
+            d, galaxias, coordenadas = generate_matrix.generate_matrix('qa194.tsp')
+            G = len(galaxias)
+            break
+
+        elif begin == 3:
+            d, galaxias, coordenadas = generate_matrix.generate_matrix('uy734.tsp')
+            G = len(galaxias)
+            break
+
         else:
-            begin = int(input("---> Entrada inválida, digite o ou 1! "))
+            begin = int(input("---> Entrada inválida! Digite 0 para Western Sahara, 1 para Djibouti, 2 para Qatar e 3 para Uruguay: "))
 
     print("\n")
 

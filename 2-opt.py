@@ -56,7 +56,7 @@ if __name__ == '__main__':
     #print(G)
 
     rota_inicial = list(range(G))
-    #random.shuffle(rota_inicial)
+    random.shuffle(rota_inicial)
 
     rota_top = h_2opt(rota_inicial.copy(), d)
 
